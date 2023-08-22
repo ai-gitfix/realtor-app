@@ -1,5 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// used "npx prisma db push" to create the database model in postgresql
+// "npx prisma studio" to view the database model
 
 generator client {
   provider = "prisma-client-js"
