@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, HttpException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
@@ -9,6 +9,11 @@ interface SignUpParams {
     password: string;
     name: string;
     phone: string;
+}
+
+interface SignInParams {
+    email: string;
+    password: string;
 }
 
 @Injectable()
@@ -41,13 +46,36 @@ export class AuthService {
         
         // npm install jsonwebtoken @types/jsonwebtoken
         //Step 4 : Create a JWT token and return it
-        const token = jwt.sign(
-            { name, id: user.id }, 
-            process.env.JWT_SECRET, 
-            { expiresIn: '7d' });
-
+        const token = this.generateToken(user.name, user.id);
 
         return token;
     }
 
+
+    //Step 5: Authenticate the user information with the help of DTO
+    async signInUser({email, password}: SignInParams) {
+
+        const user = await this.prismaService.user.findUnique({ where: { email } });
+
+        if (!user) {
+            throw new HttpException("Invalid credentials", 401);
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            throw new HttpException("Invalid credentials", 401);
+        }
+
+        const token = this.generateToken(user.name, user.id);
+
+        return token;        
+    }
+
+    private generateToken(name: string, id: number) {
+        return jwt.sign(
+            { name, id }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '7d' });
+    }
 }

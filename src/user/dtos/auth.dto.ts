@@ -23,3 +23,13 @@ export class SignUpDto {
     })
     password: string;
 }
+
+export class SignInDto {
+    @IsString()
+    @IsEmail()
+    email: string;
+
+    @IsString()
+    password: string;
+
+}
