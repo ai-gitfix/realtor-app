@@ -46,7 +46,7 @@ model User {
     id                   Int    @id() @default(autoincrement())
     name                 String 
     phone                String
-    email                String
+    email                String @unique //it should be marked as unique to avoid duplicate emails also change is made in schema.prisma so npx prisma db push is required 
     password             String
     created_at           DateTime @default(now())
     updated_at           DateTime @updatedAt

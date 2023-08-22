@@ -2,7 +2,7 @@
 import { IsString, IsNotEmpty, Matches, IsEmail, MinLength } from 'class-validator';
 
 
-//Step1: Authenticate the user infortmation with the help of DTO
+//Step1: Authenticate the user information with the help of DTO
 export class SignUpDto {
     @IsString()
     @IsNotEmpty()
