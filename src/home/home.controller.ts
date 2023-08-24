@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, V
 import { HomeService } from './home.service';
 import { homeCreateDto, homeResponseDto, homeUpdateDto } from './dto/home.dto';
 import { PropertyType } from '@prisma/client';
-import { IS_BOOLEAN_STRING } from 'class-validator';
+import { User, userInfo } from 'src/user/decorators/user.decorator';
 
 @Controller('home')
 export class HomeController {
@@ -37,10 +37,11 @@ export class HomeController {
 
     @Post()
     createHome(
-        @Body() body: homeCreateDto
+        @Body() body: homeCreateDto,
+        @User() user: userInfo
     ){
-        return this.homeService.createHome(body);
-
+        console.log(user);
+        return this.homeService.createHome(user.id, body);
     }
 
     @Put(":id")
