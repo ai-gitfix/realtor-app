@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { HomeService } from './home.service';
-import { homeCreateDto, homeResponseDto } from './dto/home.dto';
+import { homeCreateDto, homeResponseDto, homeUpdateDto } from './dto/home.dto';
 import { PropertyType } from '@prisma/client';
+import { IS_BOOLEAN_STRING } from 'class-validator';
 
 @Controller('home')
 export class HomeController {
@@ -43,12 +44,17 @@ export class HomeController {
     }
 
     @Put(":id")
-    updateHome(){
-        return this.homeService.updateHome();
+    updateHome(
+        @Param("id") id: number,
+        @Body() body: homeUpdateDto
+    ){
+        return this.homeService.updateHome(id, body);
     }
 
     @Delete(":id")
-    deleteHome(){
-        return this.homeService.deleteHome();
+    deleteHome(
+        @Param("id", ParseIntPipe) id: number
+    ){
+        return this.homeService.deleteHome(id);
     }
 }

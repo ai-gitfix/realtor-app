@@ -23,6 +23,16 @@ interface createHomeParams {
     images: {url: string}[];
 }
 
+interface updateHomeParams {
+    address? : string;
+    price? : number;
+    land_size? : number;
+    city? : string;
+    propertyType? : PropertyType;
+    bedroom? : number;
+    bathroom? : number;
+}
+
 const homeSelect = {
     id: true,
     address :true,
@@ -47,6 +57,8 @@ export class HomeService {
     constructor(private readonly prismaService: PrismaService){}
 
     async getHomes(filter : filterParams) : Promise<homeResponseDto[]>{
+        
+        //Step:12: Get homes with filter
         const homes = await this.prismaService.home.findMany(
             {
                 select: homeSelect,
@@ -57,6 +69,7 @@ export class HomeService {
 
         if(!homes.length) throw new NotFoundException("No homes found");
 
+        //Step:13: Map homes to homeResponseDto which will exclude unwanted fields
         return homes.map(home => {
             const image = home.images[0].url;
             delete home.images;
@@ -82,7 +95,7 @@ export class HomeService {
 
     async createHome( {address , price,land_size,city,propertyType,bedroom,bathroom,images } : createHomeParams){
 
-
+        //Step:14: Create home and images and connect them
         const home = await this.prismaService.home.create({
             data: {
                 address,
@@ -107,7 +120,25 @@ export class HomeService {
         return new homeResponseDto(home);
     }
 
-    updateHome(){}
+    //Step:14: Update home 
+    async updateHome(id : number, body : updateHomeParams){
 
-    deleteHome(){}
+        const home = await this.prismaService.home.findUnique({where: {id}})
+
+        if(!home) throw new NotFoundException("Home not found");
+
+        const updatedHome = await this.prismaService.home.update({
+            where: { id } ,
+            data : body
+        })
+
+        return new homeResponseDto(updatedHome);
+    }
+
+    //Step:15: Complete CRUD with delete home
+    async deleteHome(id : number ){
+        await this.prismaService.image.deleteMany({where: {home_id: id}})
+
+        await this.prismaService.home.delete({where: {id}})
+    }
 }
