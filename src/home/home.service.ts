@@ -157,6 +157,8 @@ export class HomeService {
             }                    
         })
 
+        if(!home) throw new NotFoundException("Home not found");
+
         return home.user;
     }
 

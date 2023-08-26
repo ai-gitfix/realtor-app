@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
             // we put it in try catch because if the token is not valid then it will throw error and we will return false
             const payload = jwt.verify(token, process.env.JWT_SECRET) as JWTPayload;
             // console.log(payload);
-            // request.user = payload; //??
+            // request.user = payload; // we can also do this and if we do this we can remove all user interceptor but we will do it in user interceptor
 
             const user = await this.prismaService.user.findUnique({
                 where: {

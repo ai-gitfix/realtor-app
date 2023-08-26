@@ -39,7 +39,6 @@ export class HomeController {
 
     //Step 21: Add userType authorization to createHome() method with nestjs guards
     @Roles(UserType.ADMIN, UserType.REALTOR)
-    @UseGuards(AuthGuard)
     @Post()
     createHome(
         @Body() body: homeCreateDto,
@@ -52,7 +51,6 @@ export class HomeController {
     }
 
     @Roles(UserType.ADMIN, UserType.REALTOR)
-    @UseGuards(AuthGuard)
     @Put(":id")
     async updateHome(
         @Param("id") id: number,
@@ -69,7 +67,6 @@ export class HomeController {
     }
 
     @Roles(UserType.ADMIN, UserType.REALTOR)
-    @UseGuards(AuthGuard)
     @Delete(":id")
     async deleteHome(
         @Param("id", ParseIntPipe) id: number,
