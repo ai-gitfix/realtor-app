@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, ValidationPipe, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, ValidationPipe, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { homeCreateDto, homeResponseDto, homeUpdateDto } from './dto/home.dto';
-import { PropertyType } from '@prisma/client';
+import { PropertyType, UserType } from '@prisma/client';
 import { User, userInfo } from 'src/user/decorators/user.decorator';
+import { Roles } from 'src/decorators/roles.decorators';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('home')
 export class HomeController {
@@ -35,16 +37,22 @@ export class HomeController {
         return this.homeService.getHome(id);
     }
 
+    //Step 21: Add userType authorization to createHome() method with nestjs guards
+    @Roles(UserType.ADMIN, UserType.REALTOR)
+    @UseGuards(AuthGuard)
     @Post()
     createHome(
         @Body() body: homeCreateDto,
         //Step:16: Add @User() decorator to createHome() method it will create a home with that user id if it is realtor or admin
         @User() user: userInfo
     ){
-        console.log(user);
-        return this.homeService.createHome(user.id, body);
+        // console.log(user);
+        // return this.homeService.createHome(user.id, body);
+        return "created"
     }
 
+    @Roles(UserType.ADMIN, UserType.REALTOR)
+    @UseGuards(AuthGuard)
     @Put(":id")
     async updateHome(
         @Param("id") id: number,
@@ -60,6 +68,8 @@ export class HomeController {
         return this.homeService.updateHome(id, body);
     }
 
+    @Roles(UserType.ADMIN, UserType.REALTOR)
+    @UseGuards(AuthGuard)
     @Delete(":id")
     async deleteHome(
         @Param("id", ParseIntPipe) id: number,
