@@ -38,6 +38,7 @@ export class HomeController {
     @Post()
     createHome(
         @Body() body: homeCreateDto,
+        //Step:16: Add @User() decorator to createHome() method it will create a home with that user id if it is realtor or admin
         @User() user: userInfo
     ){
         console.log(user);

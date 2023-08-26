@@ -106,7 +106,7 @@ export class HomeService {
                 bedroom,
                 bathroom,
                 images: { create: images },
-                user_id : userId
+                user_id : userId // Step 1: Add user_id to home which comes from request
             }
         })
 
