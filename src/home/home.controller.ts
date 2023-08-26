@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, ValidationPipe, UnauthorizedException } from '@nestjs/common';
 import { HomeService } from './home.service';
 import { homeCreateDto, homeResponseDto, homeUpdateDto } from './dto/home.dto';
 import { PropertyType } from '@prisma/client';
@@ -46,17 +46,30 @@ export class HomeController {
     }
 
     @Put(":id")
-    updateHome(
+    async updateHome(
         @Param("id") id: number,
-        @Body() body: homeUpdateDto
+        @Body() body: homeUpdateDto,
+        @User() user: userInfo
     ){
+        //Step 19 : Add authorization to updateHome() method
+        const realtor = await this.homeService.getRealtorByHomeId(id);
+        if(user.id !== realtor.id){
+            throw new UnauthorizedException("You are not authorized to update this home");
+        }
+
         return this.homeService.updateHome(id, body);
     }
 
     @Delete(":id")
-    deleteHome(
-        @Param("id", ParseIntPipe) id: number
+    async deleteHome(
+        @Param("id", ParseIntPipe) id: number,
+        @User() user: userInfo
     ){
+        //Step 20 : Add authorization to deleteHome() method
+        const realtor = await this.homeService.getRealtorByHomeId(id);
+        if(user.id !== realtor.id){
+            throw new UnauthorizedException("You are not authorized to delete this home");
+        }
         return this.homeService.deleteHome(id);
     }
 }

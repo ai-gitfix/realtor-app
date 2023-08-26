@@ -141,4 +141,23 @@ export class HomeService {
 
         await this.prismaService.home.delete({where: {id}})
     }
+
+    async getRealtorByHomeId(home_id: number){
+        const home = await this.prismaService.home.findUnique({
+            where: {id: home_id},
+            select: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        phone: true,
+                    }
+                }
+            }                    
+        })
+
+        return home.user;
+    }
+
 }
