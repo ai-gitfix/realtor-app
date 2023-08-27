@@ -177,7 +177,17 @@ export class HomeService {
 
     async getHomeMessages(home_id: number){
         return this.prismaService.message.findMany({
-            where:{ home_id }
+            where:{ home_id },
+            select: {
+                message: true,
+                buyer: {
+                    select: {
+                        name: true,
+                        email: true,
+                        phone: true,
+                    }
+                }
+            }
         })
     }
 }
