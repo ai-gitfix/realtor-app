@@ -115,3 +115,9 @@ export class homeUpdateDto {
     @IsPositive()  
     bathroom? : number;
 }
+
+export class inquireDto {
+
+    @IsString()
+    message: string;
+}

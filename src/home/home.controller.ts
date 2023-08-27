@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Query, Body, ParseIntPipe, ValidationPipe, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { HomeService } from './home.service';
-import { homeCreateDto, homeResponseDto, homeUpdateDto } from './dto/home.dto';
+import { homeCreateDto, homeResponseDto, homeUpdateDto, inquireDto } from './dto/home.dto';
 import { PropertyType, UserType } from '@prisma/client';
 import { User, userInfo } from 'src/user/decorators/user.decorator';
 import { Roles } from 'src/decorators/roles.decorators';
@@ -79,4 +79,31 @@ export class HomeController {
         }
         return this.homeService.deleteHome(id);
     }
+
+    // Step 23: Sending message to realtor from buyer with inquireHome() service method
+    @Roles(UserType.BUYER)
+    @Post("/inquire/:id")
+    async inquireHome(
+        @Param("id", ParseIntPipe) id: number,
+        @Body() {message}: inquireDto, //message is destructured from body
+        @User() user: userInfo
+    ){
+        return this.homeService.inquireHome(id, message, user.id);
+    }
+
+    // Step 24: Realtor can view messages for her home with getMessages() service method
+    @Roles(UserType.REALTOR)
+    @Get("/:id/messages")
+    async getMessages(
+        @Param("id", ParseIntPipe) home_id: number,
+        @User() user: userInfo
+    ){
+        const realtor = await this.homeService.getRealtorByHomeId(home_id);
+        if(user.id !== realtor.id){
+            throw new UnauthorizedException("You are not authorized to view messages for this home");
+        }
+
+        return this.homeService.getHomeMessages(home_id);
+    }
+
 }

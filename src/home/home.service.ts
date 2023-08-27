@@ -162,4 +162,22 @@ export class HomeService {
         return home.user;
     }
 
+    async inquireHome(home_id: number, message: string, user_id: number){
+        const realtor = await this.getRealtorByHomeId(home_id);
+
+        return await this.prismaService.message.create({
+            data: {
+                message,
+                home_id,
+                buyer_id: user_id,
+                realtor_id: realtor.id,
+            }
+        })
+    }
+
+    async getHomeMessages(home_id: number){
+        return this.prismaService.message.findMany({
+            where:{ home_id }
+        })
+    }
 }
