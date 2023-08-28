@@ -4,7 +4,6 @@ import { homeCreateDto, homeResponseDto, homeUpdateDto, inquireDto } from './dto
 import { PropertyType, UserType } from '@prisma/client';
 import { User, userInfo } from 'src/user/decorators/user.decorator';
 import { Roles } from 'src/decorators/roles.decorators';
-import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('home')
 export class HomeController {
@@ -46,8 +45,7 @@ export class HomeController {
         @User() user: userInfo
     ){
         // console.log(user);
-        // return this.homeService.createHome(user.id, body);
-        return "created"
+        return this.homeService.createHome(user.id, body);
     }
 
     @Roles(UserType.ADMIN, UserType.REALTOR)

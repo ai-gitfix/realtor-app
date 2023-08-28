@@ -33,7 +33,7 @@ interface updateHomeParams {
     bathroom? : number;
 }
 
-const homeSelect = {
+export const homeSelect = {
     id: true,
     address :true,
     price : true,
@@ -116,7 +116,6 @@ export class HomeService {
         // await this.prismaService.image.createMany({
         //     data: homeImages,
         // })
-
         return new homeResponseDto(home);
     }
 
