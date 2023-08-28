@@ -93,7 +93,7 @@ export class HomeService {
         return new homeResponseDto({...home,  image})
     }
 
-    async createHome( userId : number ,{address , price,land_size,city,propertyType,bedroom,bathroom,images } : createHomeParams){
+    async createHome( userId : number ,{address , price, land_size, city, propertyType, bedroom, bathroom, images } : createHomeParams){
 
         //Step:14: Create home and images and connect them
         const home = await this.prismaService.home.create({
