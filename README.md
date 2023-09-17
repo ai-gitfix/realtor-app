@@ -296,6 +296,8 @@ $ npm run start:prod
 
 ## Test
 
+There are test cases written in home.service.spec.ts and home.controller.spec.ts. You can run and test these
+
 ```bash
 # unit tests
 $ npm run test
