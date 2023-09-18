@@ -1,6 +1,6 @@
 # Realtor App: Building a Scalable Web Application with Nest.js, TypeScript, Prisma, and PostgreSQL
 
-
+(POSTRESQL IS CLOSED BECAUSE OF COSTS!)
 
 ## Overview
 
