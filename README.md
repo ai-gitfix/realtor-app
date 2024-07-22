@@ -1,10 +1,10 @@
 # Realtor App: Building a Scalable Web Application with Nest.js, TypeScript, Prisma, and PostgreSQL
 
-(POSTRESQL IS CLOSED BECAUSE OF COSTS!)
+(POSTGRESQL IS CLOSED BECAUSE OF COSTS!)
 
 ## Overview
 
-Welcome to my project that leverages the power of Nest.js, TypeScript, Prisma, and PostgreSQL to build a robust and scalable web application. This project embodies modern development practices, utilizing a strong, typed language, efficient backend framework, an ORM for database interaction, and a powerful relational database.
+Welcome to my project, which leverages the power of Nest.js, TypeScript, Prisma, and PostgreSQL to build a robust and scalable web application. This project embodies modern development practices, utilizing a strong, typed language, an efficient backend framework, an ORM for database interaction, and a powerful relational database.
 
 ## Technology Stack
 
@@ -30,7 +30,7 @@ Our project aims to achieve the following objectives:
 
 1. **Efficient Backend Development**: Utilize Nest.js to rapidly develop a backend with well-structured code and powerful features.
 
-2. **Type-Safe Code**: Leverage TypeScript to ensure type safety throughout the application, minimizing runtime errors and providing enhanced developer experiences.
+2. **Type-Safe Code**: Leverage TypeScript to ensure type safety throughout the application, minimizing runtime errors and providing an enhanced developer experience.
 
 3. **Robust Database Interactions**: Utilize Prisma to handle database interactions seamlessly, ensuring optimal performance and reliable data management.
 
@@ -131,7 +131,7 @@ The authentication service provides several endpoints for user authentication an
 
 - **Endpoint**: `/auth/key`
 - **Method**: `POST`
-- **Description**: Generate a product key for users who want to sign up as an admin or estator.
+- **Description**: Generate a product key for users who want to sign up as an admin or realtor.
 - **Request Body**:
     ```json
     {
@@ -266,14 +266,14 @@ The `HomeController` is responsible for managing homes, including listing, creat
 ### Additional Notes
 
 - Users who want to sign up as buyers do not need a product key.
-- For admin and estator sign-ups, a valid product key is required. The product key is generated using the provided email and user type and hashed before validation.
+- For admin and realtor sign-ups, a valid product key is required. The product key is generated using the provided email and user type and is hashed before validation.
 
 
 ## Conclusion
 
 By combining the strengths of Nest.js, TypeScript, Prisma, and PostgreSQL, we are on the path to building a high-quality web application that meets our objectives of efficiency, type safety, robust database interactions, scalability, and maintainability.
 
-P.S.: This document is written based on the sentence and document organization of chatgpt.
+P.S.: This document is written based on the sentence and document organization of ChatGPT.
 
 ## Installation
 
@@ -296,7 +296,7 @@ $ npm run start:prod
 
 ## Test
 
-There are test cases written in home.service.spec.ts and home.controller.spec.ts. You can run and test these
+There are test cases written in home.service.spec.ts and home.controller.spec.ts. You can run and test these.
 
 ```bash
 # unit tests
