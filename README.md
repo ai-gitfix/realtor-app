@@ -1,3 +1,4 @@
+```markdown
 # Realtor App: Building a Scalable Web Application with Nest.js, TypeScript, Prisma, and PostgreSQL
 
 (POSTGRESQL IS CLOSED BECAUSE OF COSTS!)
@@ -37,7 +38,6 @@ Our project aims to achieve the following objectives:
 4. **Scalable Database Solution**: Utilize PostgreSQL as a scalable and robust relational database, enabling our application to handle data effectively as it grows.
 
 5. **Maintainability and Readability**: Adhere to best practices and coding standards to ensure that the codebase is maintainable, easy to read, and scalable as the project evolves.
-
 
 # Application Documentation
 
@@ -268,7 +268,6 @@ The `HomeController` is responsible for managing homes, including listing, creat
 - Users who want to sign up as buyers do not need a product key.
 - For admin and realtor sign-ups, a valid product key is required. The product key is generated using the provided email and user type and is hashed before validation.
 
-
 ## Conclusion
 
 By combining the strengths of Nest.js, TypeScript, Prisma, and PostgreSQL, we are on the path to building a high-quality web application that meets our objectives of efficiency, type safety, robust database interactions, scalability, and maintainability.
@@ -307,4 +306,5 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
 ```
